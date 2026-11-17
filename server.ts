@@ -196,31 +196,37 @@ Berikan jawaban rekomendasi wisata di Kabupaten Gunungkidul yang hangat, ringkas
 
       const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-      const modelChain: { model: string; thinkingLevel: ThinkingLevel; attempts: number }[] = [
-        { model: 'gemini-4-hydrogen', thinkingLevel: ThinkingLevel.LOW, attempts: 3 },
-        { model: 'gemini-3.1-flash-lite', thinkingLevel: ThinkingLevel.MINIMAL, attempts: 2 },
+      const withTimeout = <T,>(promise: Promise<T>, ms: number, label: string): Promise<T> =>
+        Promise.race([
+          promise,
+          new Promise<T>((_, reject) =>
+            setTimeout(() => reject(new Error(`503 UNAVAILABLE: Timeout (${label})`)), ms)
+          ),
+        ]);
+
+      const modelChain: { model: string; thinkingLevel: ThinkingLevel }[] = [
+        { model: 'gemini-4-hydrogen', thinkingLevel: ThinkingLevel.LOW },
+        { model: 'gemini-3.1-flash-lite', thinkingLevel: ThinkingLevel.MINIMAL },
       ];
 
       let response: Awaited<ReturnType<typeof callModel>> | null = null;
       let lastError: unknown = null;
 
       for (const entry of modelChain) {
-        for (let attempt = 1; attempt <= entry.attempts; attempt++) {
-          try {
-            response = await callModel(entry.model, entry.thinkingLevel);
-            break;
-          } catch (err) {
-            lastError = err;
-            if (!isTransientError(err)) {
-              throw err;
-            }
-            if (attempt < entry.attempts) {
-              const backoffMs = 700 * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 250);
-              await sleep(backoffMs);
-            }
+        try {
+          response = await withTimeout(
+            callModel(entry.model, entry.thinkingLevel),
+            9000,
+            entry.model
+          );
+          break;
+        } catch (err) {
+          lastError = err;
+          if (!isTransientError(err)) {
+            throw err;
           }
+          await sleep(250);
         }
-        if (response) break;
       }
 
       if (!response) {

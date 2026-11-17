@@ -94,7 +94,16 @@ export default function App() {
         }),
       });
 
-      const result = await response.json();
+      const rawBody = await response.text();
+      let result: { detail?: string; answer?: string; destinations?: Destination[] } = {};
+      try {
+        result = rawBody ? JSON.parse(rawBody) : {};
+      } catch {
+        throw new Error(
+          `Server mengembalikan respons non-JSON (HTTP ${response.status}). Pastikan server backend berjalan dan muat ulang halaman.`
+        );
+      }
+
       if (!response.ok) {
         throw new Error(result.detail || 'Permintaan gagal diproses.');
       }
