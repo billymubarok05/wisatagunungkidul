@@ -1,0 +1,6 @@
+{
+  "name": "WisataJogja AI",
+  "description": "Asisten rekomendasi wisata Yogyakarta berbasis preferensi pengguna dan Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
