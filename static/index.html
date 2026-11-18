@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WisataJogja AI — Wisata Kabupaten Gunungkidul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <!-- Ambient Atmospheric Backdrop -->
+    <div class="ambient-bg" aria-hidden="true"></div>
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <!-- Brand -->
+        <a class="brand" href="/">
+          <span class="brand-icon" aria-hidden="true">✦</span>
+          <span class="brand-text">
+            <span class="brand-title">WisataJogja <span class="brand-badge">AI</span></span>
+            <span class="brand-sub">Gunungkidul Edition</span>
+          </span>
+        </a>
+
+        <!-- Segmented Pill Navigation (Desktop Center / Mobile Row 2) -->
+        <nav class="nav-tabs" aria-label="Navigasi utama">
+          <button type="button" class="nav-tab active" data-tab="chat">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Asisten Chat</span>
+          </button>
+          <button type="button" class="nav-tab" data-tab="explore">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+            </svg>
+            <span>Jelajah Destinasi</span>
+          </button>
+        </nav>
+
+        <!-- Right Actions: Tersimpan & Percakapan Baru -->
+        <div class="topbar-actions">
+          <button type="button" class="nav-tab saved-pill" data-tab="saved" aria-label="Destinasi tersimpan">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Tersimpan</span>
+            <span id="savedCount" class="count-badge">0</span>
+          </button>
+          <button type="button" id="newChatBtn" class="btn-icon-circle" title="Percakapan Baru" aria-label="Percakapan Baru">
+            <span aria-hidden="true">+</span>
+            <span class="desktop-label">Percakapan Baru</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Compact Filter Strip (Mobile & Quick Context) -->
+      <div class="filter-strip">
+        <div class="filter-strip-inner">
+          <button type="button" id="openPrefsMobile" class="filter-chip chip-accent mobile-only">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+              <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+              <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+            </svg>
+            <span>Atur Preferensi</span>
+          </button>
+          <div class="context-summary-pill">
+            <span class="pill-dot" aria-hidden="true"></span>
+            <span class="context-summary" id="contextSummary">
+              Kriteria aktif: Maks Rp100.000 · Semua jenis · Semua kawasan
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="workspace-wrap">
+      <!-- Hero Banner -->
+      <div class="hero-line">
+        <div class="hero-badge">
+          <span class="hero-dot" aria-hidden="true"></span>
+          <span>PANDUAN LOKAL CERDAS</span>
+        </div>
+        <h1>Temukan tempat yang <span>sesuai ceritamu.</span></h1>
+        <p>Patuk, Semanu, Tanjungsari, Tepus &amp; seluruh pesisir eksotis Gunungkidul.</p>
+      </div>
+
+      <div class="workspace-grid">
+        <!-- Kolom Utama: Chat & Jelajah -->
+        <section class="main-card">
+          <!-- View Chat -->
+          <div id="chatView" class="view-panel">
+            <div id="chatMessages" class="messages" aria-live="polite">
+              <!-- Sambutan Awal Bergaya PNG (akan melengkapi chat dinamis) -->
+              <div class="msg assistant welcome-msg">
+                <div class="msg-avatar" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                  </svg>
+                </div>
+                <div class="msg-body">
+                  <div class="bubble">
+                    Halo! Saya siap membantumu merencanakan wisata di <strong>Kabupaten Gunungkidul</strong> sesuai preferensi dan anggaranmu.
+                    <div class="bubble-callout">
+                      <span class="callout-icon" aria-hidden="true">✦</span>
+                      <span>Bisa langsung tulis suasana liburan yang kamu impikan atau pilih rekomendasi cepat di bawah.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Starter Prompts -->
+            <div id="starterPrompts" class="starters">
+              <p class="starters-label">Mulai eksplorasi cepat:</p>
+              <div class="starters-grid">
+                <button type="button" class="starter-card" data-prompt="Rekomendasikan pantai yang tenang dan cocok untuk bersantai di Gunungkidul">
+                  <b>🌊 Pantai tenang &amp; laguna</b>
+                  <span>Pasir putih dengan laguna aman untuk bersantai</span>
+                </button>
+                <button type="button" class="starter-card" data-prompt="Saya ingin wisata sejarah dan budaya lokal di Kabupaten Gunungkidul">
+                  <b>🏛️ Sejarah &amp; desa budaya</b>
+                  <span>Situs purbakala, kerajinan topeng &amp; kuliner lokal</span>
+                </button>
+                <button type="button" class="starter-card" data-prompt="Cari wisata petualangan cave tubing atau trekking tebing di Gunungkidul">
+                  <b>🧗 Petualangan gua &amp; tebing</b>
+                  <span>Cave tubing, susur sungai bawah tanah &amp; bukit karang</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Composer & Quick Budget -->
+            <form id="chatForm" class="composer">
+              <div class="quick-budget-bar" aria-label="Pilih cepat budget tiket">
+                <span class="quick-budget-label">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                  Budget Tiket:
+                </span>
+                <div class="quick-budget-pills">
+                  <button type="button" class="qb-pill" data-sync-budget="0">Gratis</button>
+                  <button type="button" class="qb-pill" data-sync-budget="25000">≤ 25rb</button>
+                  <button type="button" class="qb-pill active" data-sync-budget="100000">≤ 100rb</button>
+                  <button type="button" class="qb-pill" data-sync-budget="200000">Bebas</button>
+                </div>
+              </div>
+
+              <div class="composer-box">
+                <span class="composer-lead-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </span>
+                <textarea id="messageInput" rows="1" placeholder="Ceritakan destinasi atau suasana impianmu..." required></textarea>
+                <button id="sendButton" class="send-btn" type="submit" aria-label="Kirim pesan">↑</button>
+              </div>
+              <div class="composer-note">Tekan Enter untuk mengirim, Shift+Enter untuk baris baru.</div>
+            </form>
+          </div>
+
+          <!-- View Jelajah & Tersimpan -->
+          <div id="exploreView" class="view-panel hidden">
+            <div class="explore-header">
+              <div>
+                <h2 id="exploreTitle">Jelajah Destinasi Gunungkidul</h2>
+                <p id="exploreSubtitle">Menampilkan destinasi sesuai preferensi aktif.</p>
+              </div>
+              <div class="explore-search-wrap">
+                <input id="exploreSearch" type="search" placeholder="Cari nama atau aktivitas...">
+              </div>
+            </div>
+            <div id="exploreGrid" class="explore-grid"></div>
+          </div>
+        </section>
+
+        <!-- Panel Preferensi Pengguna -->
+        <aside id="preferencesDrawer" class="prefs-card" aria-label="Panel preferensi pengguna">
+          <div class="prefs-scroll">
+            <div class="prefs-header">
+              <div>
+                <h2>Preferensi kamu</h2>
+                <p>Sesuaikan budget, jenis wisata, dan kawasan Gunungkidul.</p>
+              </div>
+              <button type="button" id="resetPrefsBtn" class="btn-ghost-sm">Reset</button>
+            </div>
+
+            <!-- 1. Budget -->
+            <div class="pref-section">
+              <div class="pref-row">
+                <label for="budgetRange">Budget tiket per orang</label>
+                <span id="budgetTier" class="muted-text">Menengah</span>
+              </div>
+              <div class="budget-readout">
+                <span id="budgetValue" class="mono-num">Rp100.000</span>
+                <span id="budgetCount" class="mono-muted">0 dari 18 tempat</span>
+              </div>
+              <div class="preset-group" role="group" aria-label="Pilihan cepat budget">
+                <button type="button" class="preset-btn" data-budget="0">Gratis</button>
+                <button type="button" class="preset-btn" data-budget="25000">≤ 25rb</button>
+                <button type="button" class="preset-btn" data-budget="50000">≤ 50rb</button>
+                <button type="button" class="preset-btn active" data-budget="100000">≤ 100rb</button>
+                <button type="button" class="preset-btn" data-budget="200000">Bebas</button>
+              </div>
+              <input id="budgetRange" type="range" min="0" max="200000" step="5000" value="100000">
+              <div class="range-scale"><span>Gratis</span><span>Rp100rb</span><span>Rp200rb+</span></div>
+            </div>
+
+            <!-- 2. Jenis Wisata -->
+            <div class="pref-section">
+              <div class="pref-row">
+                <span class="section-label">Jenis wisata</span>
+                <button type="button" id="allJenisBtn" class="link-btn active">Semua jenis</button>
+              </div>
+              <div class="jenis-grid">
+                <button type="button" class="jenis-tile" data-jenis="alam">
+                  <div class="tile-top"><span>Alam</span><span class="mono-muted" data-count-jenis="alam">0</span></div>
+                  <small>Pantai, bukit, air terjun</small>
+                </button>
+                <button type="button" class="jenis-tile" data-jenis="sejarah">
+                  <div class="tile-top"><span>Sejarah</span><span class="mono-muted" data-count-jenis="sejarah">0</span></div>
+                  <small>Situs purba &amp; gua</small>
+                </button>
+                <button type="button" class="jenis-tile" data-jenis="budaya">
+                  <div class="tile-top"><span>Budaya</span><span class="mono-muted" data-count-jenis="budaya">0</span></div>
+                  <small>Desa wisata &amp; tradisi</small>
+                </button>
+                <button type="button" class="jenis-tile" data-jenis="petualangan">
+                  <div class="tile-top"><span>Petualangan</span><span class="mono-muted" data-count-jenis="petualangan">0</span></div>
+                  <small>Cave tubing &amp; tebing</small>
+                </button>
+              </div>
+            </div>
+
+            <!-- 3. Kawasan Gunungkidul -->
+            <div class="pref-section">
+              <span class="section-label">Kawasan Gunungkidul</span>
+              <div class="area-list">
+                <button type="button" class="area-item active" data-lokasi="semua">
+                  <span>Semua kawasan Gunungkidul</span><span class="mono-muted" data-count-area="semua">0</span>
+                </button>
+                <button type="button" class="area-item" data-lokasi="Patuk & Playen">
+                  <span>Patuk &amp; Playen</span><span class="mono-muted" data-count-area="Patuk & Playen">0</span>
+                </button>
+                <button type="button" class="area-item" data-lokasi="Karangmojo & Semanu">
+                  <span>Karangmojo &amp; Semanu</span><span class="mono-muted" data-count-area="Karangmojo & Semanu">0</span>
+                </button>
+                <button type="button" class="area-item" data-lokasi="Tanjungsari & Baron">
+                  <span>Tanjungsari &amp; Baron</span><span class="mono-muted" data-count-area="Tanjungsari & Baron">0</span>
+                </button>
+                <button type="button" class="area-item" data-lokasi="Tepus & Girisubo">
+                  <span>Tepus &amp; Girisubo</span><span class="mono-muted" data-count-area="Tepus & Girisubo">0</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4. Suasana Favorit -->
+            <div class="pref-section">
+              <div class="pref-row">
+                <span class="section-label">Suasana favorit</span>
+                <button type="button" id="clearVibesBtn" class="link-btn hidden">Hapus</button>
+              </div>
+              <div class="vibe-wrap">
+                <button type="button" class="vibe-btn" data-vibe="ramah-keluarga">Ramah keluarga</button>
+                <button type="button" class="vibe-btn" data-vibe="sunrise-sunset">Sunrise &amp; sunset</button>
+                <button type="button" class="vibe-btn" data-vibe="kuliner-nongkrong">Kuliner &amp; santai</button>
+                <button type="button" class="vibe-btn" data-vibe="edukasi">Edukasi &amp; heritage</button>
+                <button type="button" class="vibe-btn" data-vibe="akses-mudah">Akses mudah</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="prefs-footer">
+            <div class="pref-row">
+              <span class="match-text"><strong id="matchCount" class="mono-num">0</strong> destinasi cocok</span>
+              <button type="button" id="viewExploreLink" class="link-blue">Lihat daftar</button>
+            </div>
+            <p id="matchPreview" class="match-preview"></p>
+            <button type="button" id="applyPrefsBtn" class="btn-apply">Cari Rekomendasi Sesuai Filter</button>
+            <button type="button" id="closePrefsMobile" class="btn-outline-sm mobile-only full-w">Tutup Panel</button>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="footer">WisataJogja AI · Asisten Rekomendasi Wisata Kabupaten Gunungkidul</footer>
+  </div>
+
+  <!-- Sinkronisasi tombol quick-budget di composer dengan panel preferensi -->
+  <script>
+    document.addEventListener('click', (e) => {
+      const qb = e.target.closest('[data-sync-budget]');
+      if (!qb) return;
+      const val = qb.getAttribute('data-sync-budget');
+      document.querySelectorAll('.qb-pill').forEach(btn => btn.classList.toggle('active', btn === qb));
+      const targetPreset = document.querySelector(`.preset-btn[data-budget="${val}"]`);
+      if (targetPreset) targetPreset.click();
+    });
+  </script>
+  <script src="/static/script.js"></script>
+</body>
+</html>
