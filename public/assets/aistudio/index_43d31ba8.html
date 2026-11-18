@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WisataJogja AI — Temukan Destinasi Favoritmu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">W</span><span>WisataJogja<span class="brand-ai"> AI</span></span></a>
+      <div class="side-label">ASISTEN PERJALANAN</div>
+      <div class="side-feature"><span class="feature-icon">✦</span><div><b>Travel assistant</b><small>Rekomendasi berbasis preferensi</small></div></div>
+      <div class="side-note">
+        <span class="status-dot"></span>
+        <div><b>Jelajahi Yogyakarta</b><p>Ceritakan gaya liburan yang kamu inginkan. Kami bantu menemukan tempat yang relevan.</p></div>
+      </div>
+      <div class="sidebar-bottom"><span class="mini-avatar">W</span><div><b>WisataJogja AI</b><small>Prototype penelitian RAG</small></div></div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div><span class="eyebrow">YOUR LOCAL TRAVEL GUIDE</span><h1>Temukan tempat yang <span>sesuai ceritamu.</span></h1></div>
+        <div class="top-pill"><span class="status-dot"></span> Yogyakarta, Indonesia</div>
+      </header>
+
+      <section class="workspace">
+        <div class="chat-column">
+          <div class="chat-heading"><div class="bot-avatar">✦</div><div><b>WisataJogja AI</b><small>Asisten rekomendasi wisata</small></div><span class="online-pill">● ONLINE</span></div>
+          <div id="chatMessages" class="messages" aria-live="polite">
+            <div class="message bot-message"><div class="message-avatar">✦</div><div class="bubble"><p>Halo! 👋 Aku bisa bantu menemukan destinasi wisata di Yogyakarta berdasarkan preferensimu.</p><p>Coba ceritakan ingin wisata seperti apa, berapa budget-mu, atau pilih filter di samping.</p></div></div>
+            <div class="suggestion-label">MULAI DARI IDE INI</div>
+            <div class="suggestions">
+              <button class="suggestion" data-prompt="Rekomendasikan wisata alam yang cocok untuk bersantai">🌿 Wisata alam yang santai</button>
+              <button class="suggestion" data-prompt="Saya ingin wisata sejarah dan budaya di Kota Yogyakarta">🏛️ Sejarah & budaya</button>
+              <button class="suggestion" data-prompt="Cari wisata petualangan dan bermain air di Gunungkidul">🌊 Petualangan di Gunungkidul</button>
+            </div>
+          </div>
+          <form id="chatForm" class="composer">
+            <textarea id="messageInput" rows="1" placeholder="Ceritakan destinasi yang kamu cari..." required></textarea>
+            <button class="send-button" type="submit" aria-label="Kirim pesan">↑</button>
+            <div class="composer-hint">AI dapat keliru. Periksa kembali informasi penting dari sumber resmi.</div>
+          </form>
+        </div>
+
+        <aside class="preferences">
+          <div class="panel-title"><div><span class="eyebrow">PERSONALISASI</span><h2>Preferensi kamu</h2></div><span class="sliders">☷</span></div>
+          <p class="panel-description">Atur kriteria agar hasil pencarian lebih relevan.</p>
+          <label for="budgetRange">Budget tiket per orang</label>
+          <div class="budget-value" id="budgetLabel">Rp100.000 <button id="clearBudget" type="button">Reset</button></div>
+          <input id="budgetRange" type="range" min="0" max="200000" step="10000" value="100000">
+          <div class="range-labels"><span>Gratis</span><span>Rp200.000+</span></div>
+          <div class="field-group"><label for="jenisSelect">Jenis wisata</label><select id="jenisSelect"><option value="semua">Semua jenis</option><option value="alam">Alam</option><option value="sejarah">Sejarah</option><option value="budaya">Budaya</option><option value="petualangan">Petualangan</option></select></div>
+          <div class="field-group"><label for="lokasiSelect">Area destinasi</label><select id="lokasiSelect"><option value="semua">Semua area</option><option value="Kota Yogyakarta">Kota Yogyakarta</option><option value="Bantul">Bantul</option><option value="Gunungkidul">Gunungkidul</option></select></div>
+          <div class="filter-tip"><span>✦</span><p><b>Tips pencarian</b><br>Gabungkan jenis wisata, aktivitas, dan budget di pesanmu untuk hasil yang lebih terarah.</p></div>
+          <div class="dataset-info"><span class="dataset-icon">▤</span><div><b>Dataset penelitian</b><small>Contoh data awal · wisata.csv</small></div></div>
+        </aside>
+      </section>
+      <footer>WISATAJOGJA AI <span>•</span> PROTOTIPE PENELITIAN RAG</footer>
+    </main>
+  </div>
+  <script src="/static/script.js"></script>
+</body>
+</html>
