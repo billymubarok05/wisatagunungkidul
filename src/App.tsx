@@ -7,7 +7,6 @@ import {
   Plus,
   Signal,
   SlidersHorizontal,
-  Sparkles,
   Trees,
   Wifi,
   X,
@@ -221,8 +220,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#090e0c] text-[#F2F4F8]">
-      <div className="relative mx-auto flex min-h-screen w-full max-w-[420px] flex-col overflow-x-hidden border-x border-white/5 bg-[#090e0c] shadow-2xl lg:max-w-none lg:border-0 lg:bg-transparent lg:shadow-none">
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-0 mx-auto h-[720px] w-full max-w-[420px] overflow-hidden lg:max-w-none">
+      <div className="relative mx-auto flex min-h-screen w-full flex-col overflow-x-hidden bg-[#090e0c]">
+        <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-dvh w-full overflow-hidden">
           <img
             alt="Pemandangan tebing dan pantai Gunungkidul"
             src="/assets/wisatajogja/hero-gunungkidul.png"
@@ -251,22 +250,11 @@ export default function App() {
               onClick={() => setActiveTab('chat')}
               className="flex items-center gap-2 text-left"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-lime-400 to-emerald-600 text-black shadow-lg shadow-lime-500/20">
-                <Sparkles className="h-4 w-4" />
-              </span>
-              <span>
-                <span className="flex items-center gap-1.5 leading-none">
-                  <span className="text-base font-extrabold tracking-tight text-white">
-                    WisataJogja
-                  </span>
-                  <span className="rounded bg-brand-lime px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-black">
-                    AI
-                  </span>
-                </span>
-                <span className="text-[11px] font-medium tracking-tight text-zinc-400">
-                  Gunungkidul Edition
-                </span>
-              </span>
+              <img
+                src="/assets/wisatajogja/logo-wisatajogjaAI.png"
+                alt="WisataJogja AI"
+                className="h-20 w-20 object-contain"
+              />
             </button>
 
             <div className="flex items-center gap-2">
@@ -334,22 +322,11 @@ export default function App() {
               onClick={() => setActiveTab('chat')}
               className="flex shrink-0 items-center gap-2 text-left"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-lime-400 to-emerald-600 text-black shadow-lg shadow-lime-500/20">
-                <Sparkles className="h-4 w-4" />
-              </span>
-              <span>
-                <span className="flex items-center gap-1.5 leading-none">
-                  <span className="text-base font-extrabold tracking-tight text-white">
-                    WisataJogja
-                  </span>
-                  <span className="rounded bg-brand-lime px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-black">
-                    AI
-                  </span>
-                </span>
-                <span className="text-[11px] font-medium tracking-tight text-zinc-400">
-                  Gunungkidul Edition
-                </span>
-              </span>
+              <img
+                src="/assets/wisatajogja/logo-wisatajogjaAI.png"
+                alt="WisataJogja AI"
+                className="h-20 w-20 object-contain"
+              />
             </button>
 
             <nav
@@ -412,7 +389,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className="relative z-20 mx-auto w-full max-w-[420px] px-5 pt-2 lg:max-w-[1380px] lg:px-5 lg:pt-3 xl:px-8">
+        <div className="relative z-20 mx-auto w-full max-w-[1380px] px-5 pt-2 lg:px-5 lg:pt-3 xl:px-8">
           <div className="no-scrollbar flex items-center gap-2 overflow-x-auto text-xs">
             <button
               type="button"
@@ -452,7 +429,7 @@ export default function App() {
           </div>
         </div>
 
-        <main className="relative z-10 mx-auto flex w-full max-w-[420px] flex-1 flex-col lg:max-w-[1380px] lg:px-5 lg:py-6 xl:px-8">
+        <main className="relative z-10 mx-auto flex w-full max-w-[1380px] flex-1 flex-col px-5 py-4 lg:px-5 lg:py-6 xl:px-8">
           <div className="mb-5 hidden lg:block">
             <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-brand-lime/20 bg-brand-lime/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-lime">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-lime" />

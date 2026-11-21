@@ -419,7 +419,7 @@ export function ChatWorkspace({
         </div>
       </form>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-[420px] lg:hidden">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto w-full max-w-[1380px] lg:hidden">
         <div className="h-8 bg-gradient-to-t from-[#090e0c] via-[#090e0c]/60 to-transparent" />
         <div className="pointer-events-auto space-y-2.5 border-t border-white/10 bg-[#0c120f]/80 px-4 pb-6 pt-2.5 backdrop-blur-2xl">
           <div className="flex items-center justify-between gap-2">
