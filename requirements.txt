@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+pandas
+chromadb
+google-genai
+python-dotenv
